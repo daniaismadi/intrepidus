@@ -6,6 +6,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
+import 'package:sleep_shifting_scheduler/database/database.dart';
 
 class CalenderWidget extends StatefulWidget {
   CalenderWidget({Key key}) : super(key: key);
@@ -33,7 +34,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   DateTime _currentDate = DateTime.now();
   int scrollMonth = DateTime.now().month;
 
-  EventList<Event> _markedDateMap = EventListModel(fromMap: {
+  static EventListModel _markedDateModel = EventListModel(fromMap: {
     DateTime(2020, 10, 5).toIso8601String(): [
       {
         'eventId': '1',
@@ -80,10 +81,23 @@ class _CalenderWidgetState extends State<CalenderWidget> {
         'dateTime': DateTime.now().toIso8601String(),
       }
     ]
-  }).eventList;
+  });
+
+  EventList<Event> _markedDateMap = _markedDateModel.eventList;
+
+  // Insert calendar to firebase.
+  void insertCalendar(String userId) {
+    databaseReference
+        .child(userId)
+        .update({'calendar': _markedDateModel.toMap()});
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Insert to database automatically every time it builds.
+    // Hard coded userID to be 1.
+    insertCalendar('1');
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

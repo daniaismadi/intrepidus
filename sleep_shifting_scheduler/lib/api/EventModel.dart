@@ -46,7 +46,7 @@ class EventListModel {
   Map<String, List<Map<String, dynamic>>> toMap() {
     return thisEventsModelMap.map(
       (DateTime key, List<EventModel> value) => MapEntry(
-        key.toIso8601String(),
+        key.toIso8601String().substring(0, 19),
         value.map((EventModel e) => e.getMap()).toList(),
       ),
     );
