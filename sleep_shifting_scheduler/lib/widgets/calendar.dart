@@ -37,38 +37,44 @@ class _CalenderWidgetState extends State<CalenderWidget> {
     DateTime(2020, 10, 5).toIso8601String(): [
       {
         'eventId': '1',
+        'description': 'Some Description',
         'eventTitle': 'hello world',
-        'color': '#aabbcc',
+        'color': '#D8122F',
         'dateTime': DateTime.now().toIso8601String(),
       },
       {
         'eventId': '2',
+        'description': 'Some Description',
         'eventTitle': 'hello world',
         'color': '#aabbcc',
         'dateTime': DateTime.now().toIso8601String(),
       },
       {
         'eventId': '3',
+        'description': 'Some Description',
         'eventTitle': 'hello world',
-        'color': '#aabbcc',
+        'color': '#D8122F',
         'dateTime': DateTime.now().toIso8601String(),
       }
     ],
     DateTime(2020, 10, 4).toIso8601String(): [
       {
         'eventId': '1',
+        'description': 'Some Description',
         'eventTitle': 'hello world',
         'color': '#aabbcc',
         'dateTime': DateTime.now().toIso8601String(),
       },
       {
         'eventId': '2',
+        'description': 'Some Description',
         'eventTitle': 'hello world',
-        'color': '#aabbcc',
+        'color': '#D8122F',
         'dateTime': DateTime.now().toIso8601String(),
       },
       {
         'eventId': '3',
+        'description': 'Some Description',
         'eventTitle': 'hello world',
         'color': '#aabbcc',
         'dateTime': DateTime.now().toIso8601String(),

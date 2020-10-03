@@ -3,9 +3,11 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 
 class EventListModel {
+  /* A list of events */
   // EventList<Event> is used in calender;
   EventList<Event> thisEventsList;
   Map<DateTime, List<EventModel>> thisEventsModelMap;
+  // Generates a map
   Map<String, List<Map<String, dynamic>>> fromMap;
 
   EventListModel({this.thisEventsModelMap, this.fromMap}) {
