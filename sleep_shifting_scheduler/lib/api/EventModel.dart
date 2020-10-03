@@ -90,15 +90,12 @@ class EventModel {
 
   // Initializes Event object which will be used in the calender widget
   void initEvent() => thisEvent = Event(
-        date: dateTime,
-        icon: Icon(Icons.add),
-        dot: Container(
-          margin: EdgeInsets.symmetric(horizontal: 1.0),
-          color: colorFromString(),
-          height: 5.0,
-          width: 5.0,
-        ),
-      );
+      date: dateTime,
+      icon: Icon(Icons.add),
+      dot: CircleAvatar(
+        radius: 2.5,
+        backgroundColor: colorFromString(),
+      ));
 
   // Converts color from hexString to Color
   Color colorFromString() {
