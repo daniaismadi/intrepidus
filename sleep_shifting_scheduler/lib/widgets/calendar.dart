@@ -84,12 +84,13 @@ class _CalenderWidgetState extends State<CalenderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           color: Color(0XFF074EE8),
-          height: 150,
+          height: size.height / 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -101,7 +102,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 23),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
@@ -122,33 +123,34 @@ class _CalenderWidgetState extends State<CalenderWidget> {
         Container(
           color: Color(0XFFE0EAFF),
           child: CalendarCarousel<Event>(
-            onDayPressed: (DateTime date, List<Event> events) {
-              this.setState(() => _currentDate = date);
-            },
+            onDayPressed: (DateTime date, List<Event> events) =>
+                this.setState(() => _currentDate = date),
             showHeaderButton: false,
             headerMargin: EdgeInsets.all(35),
-            childAspectRatio: 1.2,
+            childAspectRatio: 1.0,
             headerTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
             showHeader: false,
-            onCalendarChanged: (DateTime a) {
-              setState(() => scrollMonth = a.month);
-            },
+            onCalendarChanged: (DateTime a) =>
+                setState(() => scrollMonth = a.month),
             showWeekDays: false,
             weekendTextStyle: TextStyle(color: Colors.black),
             daysTextStyle: TextStyle(color: Colors.black),
             weekDayFormat: WeekdayFormat.standaloneShort,
             weekdayTextStyle: TextStyle(color: Colors.black),
-            height: 280,
+            height: size.height * 2 / 5,
             weekFormat: false,
             nextMonthDayBorderColor: Colors.black,
             daysHaveCircularBorder: null,
             markedDatesMap: _markedDateMap,
             selectedDateTime: _currentDate,
           ),
+        ),
+        Container(
+          height: size.height * 2 / 5,
         ),
       ],
     );
