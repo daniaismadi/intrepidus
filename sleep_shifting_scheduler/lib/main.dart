@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
+import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
 import 'widgets/intrepidus.dart';
 
 void main() {
@@ -11,11 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.lightBlue[800],
-        accentColor: Colors.lightBlueAccent,
-      ),
-      home: MyHomePage(title: 'Home Page'),
-    );
+        theme: ThemeData(
+          primaryColor: Colors.lightBlue[800],
+          accentColor: Colors.lightBlueAccent,
+        ),
+        home: MyHomePage());
   }
 }

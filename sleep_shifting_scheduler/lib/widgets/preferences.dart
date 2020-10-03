@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sleep_shifting_scheduler/widgets/docking-undocking.dart';
+import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
 import 'custom_widget/confirm.dart';
 import 'custom_widget/switch.dart';
-import 'docking-undocking.dart';
 
 class Preference extends StatefulWidget {
   @override
@@ -80,7 +79,7 @@ class _PreferenceState extends State<Preference> {
               padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [SvgPicture.asset('assets/logo.svg')]),
+                  children: [SvgPicture.asset('lib/images/logo.svg')]),
             ),
           ],
         ),

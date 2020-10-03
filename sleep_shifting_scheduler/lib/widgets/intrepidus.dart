@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SvgPicture.asset('assets/logowords.svg'),
+            SvgPicture.asset('lib/images/logowords.svg'),
             TripButton(onPressed: () {
               Navigator.push(
                 context,

@@ -52,7 +52,7 @@ class MornNight extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [SvgPicture.asset('assets/logo.svg')]),
+                  children: [SvgPicture.asset('lib/images/logo.svg')]),
             ),
           ],
         ),
