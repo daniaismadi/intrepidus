@@ -5,6 +5,7 @@ import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:sleep_shifting_scheduler/api/EventModel.dart';
 
 class CalenderWidget extends StatefulWidget {
   CalenderWidget({Key key}) : super(key: key);
@@ -31,36 +32,52 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   ];
   DateTime _currentDate = DateTime.now();
   int scrollMonth = DateTime.now().month;
-  EventList _markedDateMap = EventList<Event>(
-    events: {
-      new DateTime(2019, 2, 10): [
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 1',
-          icon: Icon(Icons.add_a_photo_rounded),
-          dot: Container(
-            margin: EdgeInsets.symmetric(horizontal: 1.0),
-            color: Colors.red,
-            height: 5.0,
-            width: 5.0,
-          ),
-        ),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 2',
-          icon: Icon(Icons.ac_unit),
-        ),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 3',
-          icon: Icon(Icons.ac_unit),
-        ),
-      ],
-    },
-  );
+
+  EventList<Event> _markedDateMap = EventListModel(fromMap: {
+    DateTime(2020, 10, 5).toIso8601String(): [
+      {
+        'eventId': '1',
+        'eventTitle': 'hello world',
+        'color': '#aabbcc',
+        'dateTime': DateTime.now().toIso8601String(),
+      },
+      {
+        'eventId': '2',
+        'eventTitle': 'hello world',
+        'color': '#aabbcc',
+        'dateTime': DateTime.now().toIso8601String(),
+      },
+      {
+        'eventId': '3',
+        'eventTitle': 'hello world',
+        'color': '#aabbcc',
+        'dateTime': DateTime.now().toIso8601String(),
+      }
+    ],
+    DateTime(2020, 10, 4).toIso8601String(): [
+      {
+        'eventId': '1',
+        'eventTitle': 'hello world',
+        'color': '#aabbcc',
+        'dateTime': DateTime.now().toIso8601String(),
+      },
+      {
+        'eventId': '2',
+        'eventTitle': 'hello world',
+        'color': '#aabbcc',
+        'dateTime': DateTime.now().toIso8601String(),
+      },
+      {
+        'eventId': '3',
+        'eventTitle': 'hello world',
+        'color': '#aabbcc',
+        'dateTime': DateTime.now().toIso8601String(),
+      }
+    ]
+  }).eventList;
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -81,43 +98,18 @@ class _CalenderWidgetState extends State<CalenderWidget> {
               SizedBox(height: 23),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Sun',
-                          style: TextStyle(fontSize: 16, color: Colors.white))),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text('Mon',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Tue',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Wed',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Thu',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Fri',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Sat',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                ],
-              )
+                children: (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
+                    .map(
+                      (e) => Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          e,
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
             ],
           ),
         ),
