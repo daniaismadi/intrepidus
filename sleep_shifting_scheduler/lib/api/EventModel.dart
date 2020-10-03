@@ -24,6 +24,12 @@ class EventListModel {
           ),
         ),
       );
+      thisEventsModelMap = fromMap.map(
+        (String key, List<Map<String, dynamic>> value) => MapEntry(
+          DateTime.parse(key),
+          value.map((e) => EventModel(fromMap: e)).toList(),
+        ),
+      );
     } else {
       // Generate the EventList from thisEventsModelMap when we dont have Map from Database
       thisEventsList = EventList(
@@ -45,6 +51,8 @@ class EventListModel {
       ),
     );
   }
+
+  List<EventModel> getEventModelList(DateTime day) => thisEventsModelMap[day];
 
   EventList<Event> get eventList => thisEventsList;
 }
