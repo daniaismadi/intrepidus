@@ -12,6 +12,9 @@ class ExcerciseModel {
     }
   }
 
+  List<Map<String, int>> getTodayExercise(DateTime day) =>
+      exerciseMap[DateTime(day.year, day.month, day.day)];
+
   Map<String, List<Map<String, int>>> toMap() => exerciseMap.map(
         (DateTime time, List<Map<String, int>> value) => MapEntry(
           time.toIso8601String().substring(0, 19),

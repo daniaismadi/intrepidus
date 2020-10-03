@@ -3,14 +3,18 @@ class MealModel {
   Map<DateTime, List<Meal>> mealList;
   Map<String, List<Map<String, List<String>>>> fromMap;
   MealModel({this.mealList, this.fromMap}) {
-    mealList = fromMap.map(
-      (String date, List<Map<String, List<String>>> value) => MapEntry(
-        DateTime.parse(date),
-        value.map(
-          (Map<String, List<String>> e) => Meal(fromMap: e),
+    if (fromMap != null) {
+      mealList = fromMap.map(
+        (String date, List<Map<String, List<String>>> value) => MapEntry(
+          DateTime.parse(date),
+          value
+              .map(
+                (Map<String, List<String>> e) => Meal(fromMap: e),
+              )
+              .toList(),
         ),
-      ),
-    );
+      );
+    }
   }
   // Get today's meals
   List<Meal> getTodayMeals(DateTime day) =>

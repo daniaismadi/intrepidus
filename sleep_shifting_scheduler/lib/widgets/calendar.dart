@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
-
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
+import 'package:sleep_shifting_scheduler/api/ExerciseModel.dart';
+import 'package:sleep_shifting_scheduler/api/MealModel.dart';
 import 'package:sleep_shifting_scheduler/constants.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel;
 
 class CalenderWidget extends StatefulWidget {
   CalenderWidget({Key key}) : super(key: key);
@@ -17,22 +18,30 @@ class CalenderWidget extends StatefulWidget {
 
 class _CalenderWidgetState extends State<CalenderWidget>
     with SingleTickerProviderStateMixin {
+  static EventListModel _markedDate;
+  static ExcerciseModel _exerciseModel;
+  static MealModel _mealModel;
+
   DateTime _currentDate = DateTime.now();
   int scrollMonth = DateTime.now().month;
-  static EventListModel _markedDate;
+
   List<EventModel> eventLists;
+  List<Map<String, int>> exerciseList;
+  List<Meal> mealLists;
   TabController tabController;
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+
     _markedDate = EventListModel(fromMap: {
-      DateTime(2020, 10, 5).toIso8601String(): [
+      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
         {
           'eventId': '1',
           'description': 'Some Description',
           'eventTitle': 'Open your eyes',
           'color': '219653',
           'dateTime': DateTime.now().toIso8601String(),
+          'until': DateTime.now().add(Duration(minutes: 20)).toIso8601String()
         },
         {
           'eventId': '2',
@@ -40,6 +49,9 @@ class _CalenderWidgetState extends State<CalenderWidget>
           'eventTitle': 'Eat',
           'color': 'F2C94C',
           'dateTime': DateTime.now().add(Duration(hours: 1)).toIso8601String(),
+          'until': DateTime.now()
+              .add(Duration(hours: 1, minutes: 20))
+              .toIso8601String(),
         },
         {
           'eventId': '3',
@@ -47,15 +59,21 @@ class _CalenderWidgetState extends State<CalenderWidget>
           'eventTitle': 'Sleep',
           'color': '074EE8',
           'dateTime': DateTime.now().add(Duration(hours: 2)).toIso8601String(),
+          'until': DateTime.now()
+              .add(Duration(hours: 2, minutes: 20))
+              .toIso8601String(),
         }
       ],
-      DateTime(2020, 10, 3).toIso8601String(): [
+      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
         {
           'eventId': '1',
           'description': 'Some Description',
           'eventTitle': 'Open your eyes',
           'color': '219653',
           'dateTime': DateTime.now().add(Duration(hours: 1)).toIso8601String(),
+          'until': DateTime.now()
+              .add(Duration(hours: 1, minutes: 20))
+              .toIso8601String(),
         },
         {
           'eventId': '2',
@@ -63,10 +81,52 @@ class _CalenderWidgetState extends State<CalenderWidget>
           'eventTitle': 'sleep',
           'color': 'F2C94C',
           'dateTime': DateTime.now().add(Duration(hours: 2)).toIso8601String(),
+          'until': DateTime.now()
+              .add(Duration(hours: 2, minutes: 20))
+              .toIso8601String(),
         },
       ],
     });
-    eventLists = _markedDate.getEventModelList(DateTime.now());
+    _exerciseModel = ExcerciseModel(fromMap: {
+      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
+        {'ThreadMill': 40},
+        {'Cycle': 40},
+        {'Streaching': 40},
+      ],
+      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
+        {'ThreadMill': 40},
+        {'Cycle': 40},
+        {'Streaching': 40},
+      ],
+    });
+    _mealModel = MealModel(fromMap: {
+      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
+        {
+          'Meal A': ['Food', 'Grain', 'Jelly', 'Something else'],
+        },
+        {
+          'Meal B': ['Food', 'Grain', 'Jelly', 'Something else']
+        },
+        {
+          'Meal C': ['Food', 'Grain', 'Jelly', 'Something else']
+        },
+      ],
+      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
+        {
+          'Meal A': ['Food', 'Grain', 'Jelly', 'Something else']
+        },
+        {
+          'Meal B': ['Food', 'Grain', 'Jelly', 'Something else']
+        },
+        {
+          'Meal C': ['Food', 'Grain', 'Jelly', 'Something else']
+        },
+      ]
+    });
+
+    eventLists = _markedDate.getEventModelList(_currentDate);
+    exerciseList = _exerciseModel.getTodayExercise(_currentDate);
+    mealLists = _mealModel.getTodayMeals(_currentDate);
     super.initState();
   }
 
@@ -121,6 +181,8 @@ class _CalenderWidgetState extends State<CalenderWidget>
                 setState(() {
                   _currentDate = date;
                   eventLists = _markedDate.getEventModelList(_currentDate);
+                  exerciseList = _exerciseModel.getTodayExercise(_currentDate);
+                  mealLists = _mealModel.getTodayMeals(_currentDate);
                 });
               },
             ),
@@ -130,14 +192,116 @@ class _CalenderWidgetState extends State<CalenderWidget>
               controller: tabController,
               children: [
                 ScheduleView(eventLists: eventLists),
-                Container(),
-                Container()
+                MealView(mealLists: mealLists),
+                ExerciseView(exerciseList: exerciseList),
               ],
             ),
           ),
           BottomTabs(tabController: tabController)
         ],
       ),
+    );
+  }
+}
+
+class MealView extends StatelessWidget {
+  const MealView({
+    Key key,
+    @required this.mealLists,
+  }) : super(key: key);
+
+  final List<Meal> mealLists;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Text(
+              'Meals',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: mealLists == null
+                ? Center(child: Text('No meals for you'))
+                : ListView(
+                    padding: EdgeInsets.all(0),
+                    children: mealLists
+                        .map(
+                          (Meal m) => ExpansionTile(
+                            childrenPadding: EdgeInsets.all(10),
+                            title: Text(
+                              m.title,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            children: [
+                              Container(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: m.foodList
+                                      .map(
+                                        (String e) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(e),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ExerciseView extends StatelessWidget {
+  final List<Map<String, int>> exerciseList;
+  ExerciseView({this.exerciseList, key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Text(
+            'Workout Routine',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          child: exerciseList == null
+              ? Center(child: Text('Still, no cake please...'))
+              : ListView(
+                  padding: EdgeInsets.all(0),
+                  children: exerciseList
+                      .map(
+                        (Map<String, int> e) => ListTile(
+                          title: Text(
+                            e.keys.first,
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          trailing: Text(
+                            '${e.values.first.toString()} min',
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+        ),
+      ],
     );
   }
 }
@@ -185,12 +349,40 @@ class EventsListTiles extends StatelessWidget {
           ),
         ),
         subtitle: Text(e.description, style: TextStyle(color: Colors.white)),
-        trailing: Text(
-          '${e.dateTime.hour}:${e.dateTime.minute}',
-          style: TextStyle(color: Colors.white),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DateTimeToTextWidget(e: e.dateTime),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Icon(Icons.arrow_downward, color: Colors.white, size: 15),
+            ),
+            DateTimeToTextWidget(e: e.until),
+          ],
         ),
       ),
       color: e.colorFromString(),
+    );
+  }
+}
+
+class DateTimeToTextWidget extends StatelessWidget {
+  const DateTimeToTextWidget({
+    Key key,
+    @required this.e,
+  }) : super(key: key);
+
+  final DateTime e;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      e.hour > 10
+          ? e.hour
+          : '0' +
+              e.hour.toString() +
+              (e.minute > 10 ? e.minute.toString() : '0' + e.minute.toString()),
+      style: TextStyle(color: Colors.white),
     );
   }
 }

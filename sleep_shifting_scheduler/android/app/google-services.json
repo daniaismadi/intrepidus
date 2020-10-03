@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "392083871771",
+    "firebase_url": "https://intrepidus-1ce7b.firebaseio.com",
+    "project_id": "intrepidus-1ce7b",
+    "storage_bucket": "intrepidus-1ce7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392083871771:android:1e1b1b4dc6d261e19a80be",
+        "android_client_info": {
+          "package_name": "com.example.sleep_shifting_scheduler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392083871771-tirndc2g1lmqut4evgk5u0lk26p47lic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7wdgQNrkB24vOss6f1Q3Iuo_o3fKnwmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392083871771-tirndc2g1lmqut4evgk5u0lk26p47lic.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "392083871771-m3baovkgo7ppd38cb56jjh79b474jm29.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sleepShiftingScheduler"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

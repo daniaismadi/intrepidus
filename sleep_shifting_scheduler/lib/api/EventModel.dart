@@ -64,6 +64,7 @@ class EventModel {
   String eventTitle;
   String description;
   DateTime dateTime;
+  DateTime until;
   String color;
   Map<String, dynamic> fromMap;
   // Event is used in the calender
@@ -74,6 +75,7 @@ class EventModel {
     this.eventTitle,
     this.description,
     this.dateTime,
+    this.until,
     this.eventId,
     this.fromMap,
   }) {
@@ -83,6 +85,7 @@ class EventModel {
       eventTitle = fromMap['eventTitle'];
       description = fromMap['description'];
       dateTime = DateTime.parse(fromMap['dateTime']);
+      until = DateTime.parse(fromMap['until']);
       color = fromMap['color'];
     }
     // otherwise we just need to create the objects by passing in the params
@@ -113,10 +116,12 @@ class EventModel {
         'color': color,
         'dateTime': dateTime.toIso8601String().substring(0, 19),
         'description': description,
+        'until': until
       };
 
   //Some other getters
   Event get event => thisEvent;
+  DateTime get finishTask => until;
   String get eventDescription => description;
   Color get eventEolor => colorFromString();
   DateTime get eventTime => dateTime;
