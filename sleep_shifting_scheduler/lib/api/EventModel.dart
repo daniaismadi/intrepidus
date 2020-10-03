@@ -46,13 +46,14 @@ class EventListModel {
   Map<String, List<Map<String, dynamic>>> toMap() {
     return thisEventsModelMap.map(
       (DateTime key, List<EventModel> value) => MapEntry(
-        key.toIso8601String(),
+        key.toIso8601String().substring(0, 19),
         value.map((EventModel e) => e.getMap()).toList(),
       ),
     );
   }
 
-  List<EventModel> getEventModelList(DateTime day) => thisEventsModelMap[day];
+  List<EventModel> getEventModelList(DateTime day) =>
+      thisEventsModelMap[DateTime(day.year, day.month, day.day)];
 
   EventList<Event> get eventList => thisEventsList;
 }
@@ -110,7 +111,7 @@ class EventModel {
         'eventId': eventId,
         'eventTitle': eventTitle,
         'color': color,
-        'dateTime': dateTime.toIso8601String(),
+        'dateTime': dateTime.toIso8601String().substring(0, 19),
         'description': description,
       };
 

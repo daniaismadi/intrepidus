@@ -80,6 +80,7 @@ class _CalenderWidgetState extends State<CalenderWidget>
         },
       ],
     });
+    eventLists = _markedDate.getEventModelList(DateTime.now());
     super.initState();
   }
 
@@ -133,7 +134,7 @@ class _CalenderWidgetState extends State<CalenderWidget>
               onDayPressed: (DateTime date, List<Event> events) {
                 setState(() {
                   _currentDate = date;
-                  eventLists = _markedDate.getEventModelList(date);
+                  eventLists = _markedDate.getEventModelList(_currentDate);
                 });
               },
             ),
