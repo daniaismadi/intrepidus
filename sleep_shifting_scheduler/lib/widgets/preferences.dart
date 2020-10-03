@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sleep_shifting_scheduler/widgets/docking-undocking.dart';
 import 'custom_widget/confirm.dart';
 import 'custom_widget/switch.dart';
 
@@ -102,7 +103,7 @@ class _PreferenceState extends State<Preference> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Preference()),
+                  MaterialPageRoute(builder: (context) => DockingWidget()),
                 );
               },
             ),
