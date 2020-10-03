@@ -6,6 +6,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
+import 'package:sleep_shifting_scheduler/constants.dart';
 
 class CalenderWidget extends StatefulWidget {
   CalenderWidget({Key key}) : super(key: key);
@@ -16,25 +17,10 @@ class CalenderWidget extends StatefulWidget {
 
 class _CalenderWidgetState extends State<CalenderWidget>
     with SingleTickerProviderStateMixin {
-  final months = [
-    '',
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ];
   DateTime _currentDate = DateTime.now();
   int scrollMonth = DateTime.now().month;
-  List<EventModel> eventLists;
   static EventListModel _markedDate;
+  List<EventModel> eventLists;
   TabController tabController;
   @override
   void initState() {
@@ -97,40 +83,40 @@ class _CalenderWidgetState extends State<CalenderWidget>
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CalendarHeader(size: size, months: months, scrollMonth: scrollMonth),
+          CalendarHeader(size: size, months: cMonths, scrollMonth: scrollMonth),
           Container(
             color: Color(0XFFE0EAFF),
             child: CalendarCarousel<Event>(
               showHeaderButton: false,
               headerMargin: EdgeInsets.all(35),
               childAspectRatio: 1.0,
+              showHeader: false,
+              showWeekDays: false,
+              weekFormat: false,
+              daysHaveCircularBorder: null,
+              height: size.height * 2 / 5,
+              todayButtonColor: Colors.transparent,
+              nextMonthDayBorderColor: Colors.black,
+              markedDatesMap: _markedDate.eventList,
+              weekendTextStyle: TextStyle(color: Colors.black),
+              daysTextStyle: TextStyle(color: Colors.black),
+              weekDayFormat: WeekdayFormat.standaloneShort,
+              weekdayTextStyle: TextStyle(color: Colors.black),
+              selectedDayButtonColor: Colors.grey.withOpacity(0.3),
+              selectedDateTime: _currentDate,
               headerTextStyle: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
-              showHeader: false,
               onCalendarChanged: (DateTime a) =>
                   setState(() => scrollMonth = a.month),
-              showWeekDays: false,
-              selectedDayButtonColor: Colors.grey.withOpacity(0.3),
               selectedDayTextStyle: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.black),
-              weekendTextStyle: TextStyle(color: Colors.black),
-              daysTextStyle: TextStyle(color: Colors.black),
-              weekDayFormat: WeekdayFormat.standaloneShort,
-              weekdayTextStyle: TextStyle(color: Colors.black),
               todayTextStyle: TextStyle(
                   color: Colors.red, fontWeight: FontWeight.bold, fontSize: 18),
-              todayButtonColor: Colors.transparent,
-              height: size.height * 2 / 5,
-              weekFormat: false,
-              nextMonthDayBorderColor: Colors.black,
-              daysHaveCircularBorder: null,
-              markedDatesMap: _markedDate.eventList,
-              selectedDateTime: _currentDate,
               onDayPressed: (DateTime date, List<Event> events) {
                 setState(() {
                   _currentDate = date;
@@ -143,16 +129,7 @@ class _CalenderWidgetState extends State<CalenderWidget>
             child: TabBarView(
               controller: tabController,
               children: [
-                Container(
-                  child: eventLists == null
-                      ? Center(child: Text('No events for today'))
-                      : ListView(
-                          padding: EdgeInsets.all(0),
-                          children: eventLists
-                              .map((EventModel e) => EventsListTiles(e: e))
-                              .toList(),
-                        ),
-                ),
+                ScheduleView(eventLists: eventLists),
                 Container(),
                 Container()
               ],
@@ -161,6 +138,29 @@ class _CalenderWidgetState extends State<CalenderWidget>
           BottomTabs(tabController: tabController)
         ],
       ),
+    );
+  }
+}
+
+class ScheduleView extends StatelessWidget {
+  const ScheduleView({
+    Key key,
+    @required this.eventLists,
+  }) : super(key: key);
+
+  final List<EventModel> eventLists;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: eventLists == null
+          ? Center(child: Text('No events for today'))
+          : ListView(
+              padding: EdgeInsets.all(0),
+              children: eventLists
+                  .map((EventModel e) => EventsListTiles(e: e))
+                  .toList(),
+            ),
     );
   }
 }
