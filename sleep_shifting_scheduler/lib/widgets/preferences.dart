@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sleep_shifting_scheduler/widgets/docking-undocking.dart';
 import 'custom_widget/confirm.dart';
 import 'custom_widget/switch.dart';
+import 'docking-undocking.dart';
 
 class Preference extends StatefulWidget {
   @override

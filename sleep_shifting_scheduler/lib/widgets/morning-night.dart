@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'custom_widget/morning.dart';
 import 'custom_widget/night.dart';
-import 'intrepidus.dart';
 import 'preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,7 +33,7 @@ class MornNight extends StatelessWidget {
                   MorningButton(onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                      MaterialPageRoute(builder: (context) => Preference()),
                     );
                   }),
                   Padding(
