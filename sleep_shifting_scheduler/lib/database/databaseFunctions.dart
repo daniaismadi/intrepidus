@@ -30,16 +30,16 @@ class DatabaseFunctions {
     return returnValue;
   }
 
-  Future getAllMeals(String userId) async {
+  Future<MealModel> readUserMeals(String userId) async {
     DataSnapshot dataSnapshot =
         await db.child('users/' + userId + "/meal/").once();
 
     if (dataSnapshot.value != null) {
-      Map<String, List<Map<String, List<String>>>> trial = {};
+      Map<String, List<Map<String, List<String>>>> userMeals = {};
 
-      Map<String, dynamic> example = Map<String, List>.from(dataSnapshot.value);
+      Map<String, dynamic> rawData = Map<String, List>.from(dataSnapshot.value);
 
-      example.forEach((key, value) {
+      rawData.forEach((key, value) {
         List<Map> mealList = List<Map>.from(value);
 
         List<Map<String, List<String>>> finalMealList = [];
@@ -56,10 +56,10 @@ class DatabaseFunctions {
           finalMealList.add(meal);
         });
 
-        trial[key] = finalMealList;
+        userMeals[key] = finalMealList;
       });
 
-      return trial;
+      return MealModel(fromMap: userMeals);
     }
   }
 
@@ -111,16 +111,6 @@ class DatabaseFunctions {
   //   List<List> listOfEvents =
   //       userEvent.entries.map((e) => e.value as List).toList();
   // }
-
-  MealModel getMeals(String id) {
-    MealModel trial;
-
-    getAllMeals(id).then((value) {
-      trial = MealModel(fromMap: Map.from(value));
-    });
-
-    return trial;
-  }
 
   // Future<Map> readUser(String path, String key) async {
   //   DatabaseReference user = db.child(path + '/' + key);
