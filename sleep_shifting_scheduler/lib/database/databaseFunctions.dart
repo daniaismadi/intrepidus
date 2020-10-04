@@ -58,39 +58,7 @@ class DatabaseFunctions {
       userMeals[key] = finalMealList;
     });
 
-    print(userMeals);
     return MealModel(fromMap: userMeals);
-
-    // DataSnapshot dataSnapshot =
-    //     await db.child('users/' + userId + "/meal/").once();
-
-    // if (dataSnapshot.value != null) {
-    //   Map<String, List<Map<String, List<String>>>> userMeals = {};
-
-    //   Map<String, dynamic> rawData = Map<String, List>.from(dataSnapshot.value);
-
-    //   rawData.forEach((key, value) {
-    //     List<Map> mealList = List<Map>.from(value);
-
-    //     List<Map<String, List<String>>> finalMealList = [];
-
-    //     Map<String, List<String>> meal = {};
-
-    //     mealList.forEach((element) {
-    //       Map<String, List<dynamic>> tempMeal =
-    //           Map<String, List<dynamic>>.from(element);
-    //       tempMeal.forEach((mealTitle, foodList) {
-    //         meal[mealTitle] = List<String>.from(foodList);
-    //       });
-
-    //       finalMealList.add(meal);
-    //     });
-
-    //     userMeals[key] = finalMealList;
-    //   });
-
-    //   return MealModel(fromMap: userMeals);
-    // }
   }
 
   Future<EventListModel> readUserEvents(String key) async {

@@ -91,14 +91,14 @@ class _CalenderWidgetState extends State<CalenderWidget>
     callEvents();
     _exerciseModel = ExcerciseModel(fromMap: {
       DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
-        {'ThreadMill': 40},
+        {'Treadmill': 40},
         {'Cycle': 40},
-        {'Streaching': 40},
+        {'Stretching': 40},
       ],
       DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
-        {'ThreadMill': 40},
+        {'Treadmill': 40},
         {'Cycle': 40},
-        {'Streaching': 40},
+        {'Stretching': 40},
       ],
     });
     _mealModel = MealModel(fromMap: {
