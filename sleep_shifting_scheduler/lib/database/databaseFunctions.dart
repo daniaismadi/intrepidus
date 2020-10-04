@@ -1,9 +1,4 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
 import 'package:sleep_shifting_scheduler/api/ExerciseModel.dart';
 import 'package:sleep_shifting_scheduler/api/MealModel.dart';
@@ -12,7 +7,6 @@ class DatabaseFunctions {
   static const String ADD_NEW_USER_PATH = '/users';
   final db = FirebaseDatabase.instance.reference();
 
-  // Create
   Future<void> addsData<T>(String path, String key, Map value) async =>
       await db.child(path + '/' + key).set(value);
   Future<void> deleteData<T>(String path, String key) async =>
@@ -98,30 +92,31 @@ class DatabaseFunctions {
     );
   }
 
-  // Future<MealModel> readUserMeal(String key) async {
-  //   Map userMeal;
-  //   await db
-  //       .child(DatabaseFunctions.ADD_NEW_USER_PATH + '/' + key)
-  //       .once()
-  //       .then((value) => userMeal = value.value['meal']);
-  //   List<String> listOfKeys =
-  //       userMeal.entries.map((e) => e.key.toString()).toList();
-  //   List<List> listOfEvents =
-  //       userEvent.entries.map((e) => e.value as List).toList();
-  // }
-
-  // Future<Map> readUser(String path, String key) async {
-  //   DatabaseReference user = db.child(path + '/' + key);
-  //   String userId;
-  //   String name;
-  //   user.once().then((snapshot) {
-  //     userId = snapshot.value['id'];
-  //     name = snapshot.value['name'];
-  //   });
-
-  //   Map<String, dynamic> userMap = {};
-
-  //   print(userMap.runtimeType);
-  // }
-
+  Future<ExcerciseModel> readUserExercise(String key) async {
+    Map userExercise;
+    await db
+        .child(DatabaseFunctions.ADD_NEW_USER_PATH + '/' + key)
+        .once()
+        .then((value) => userExercise = value.value['exercise']);
+    List<String> listOfKeys =
+        userExercise.entries.map((e) => e.key.toString()).toList();
+    List<List> listOfExercise =
+        userExercise.entries.map((e) => e.value as List).toList();
+    List<List<Map<String, int>>> listOfListOfMaps = listOfExercise
+        .map(
+          (e) => e
+              .map((e) => {e.keys.first as String: e.values.first as int})
+              .toList(),
+        )
+        .toList();
+    Map<DateTime, List<Map<String, int>>> myMap = {};
+    for (int i = 0; i < listOfKeys.length; i++) {
+      myMap.addEntries(
+        [
+          MapEntry(DateTime.parse(listOfKeys[i]), listOfListOfMaps[i]),
+        ],
+      );
+    }
+    return ExcerciseModel(exerciseMap: myMap);
+  }
 }

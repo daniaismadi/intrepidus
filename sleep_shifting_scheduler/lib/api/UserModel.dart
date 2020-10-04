@@ -12,8 +12,6 @@ class UserModel {
   UserModel(
       {this.id,
       this.name,
-      this.morning,
-      this.melatonin,
       this.event,
       this.exercise,
       this.meal,
@@ -21,8 +19,6 @@ class UserModel {
     if (fromMap != null) {
       id = fromMap['id'];
       name = fromMap['name'];
-      morning = fromMap['morning'];
-      melatonin = fromMap['melatonin'];
       event = fromMap['event'];
       exercise = fromMap['exercise'];
       meal = fromMap['meal'];

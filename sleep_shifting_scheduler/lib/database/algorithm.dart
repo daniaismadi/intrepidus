@@ -13,8 +13,8 @@ UserModel exampleUser = UserModel(fromMap: {
 });
 
 generateSleepSchedule(UserModel user) {
-  bool morning = user.morning;
-  bool melatonin = user.melatonin;
+  bool morning = true;
+  bool melatonin = true;
 
   // Parse int
   int offset = int.parse(timeZone[1]);

@@ -28,8 +28,6 @@ dependencies:
   flutter_svg: ^0.19.0
   custom_switch:
 
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
@@ -60,12 +58,7 @@ flutter:
         - asset: lib/fonts/Segoe-UI.ttf
   
   assets:
-    - lib/images/intrepiduslogorescale.svg
-    - lib/images/intrepiduslogo180px.svg
-    - lib/images/logowords.svg
-    - lib/images/logo.svg
     - lib/images/
-
 
   # To add assets to your application, add an assets section, like this:
   # assets:

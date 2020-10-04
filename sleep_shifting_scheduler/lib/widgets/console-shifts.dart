@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sleep_shifting_scheduler/api/InputData.dart';
+import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
 import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
 import 'loading.dart';
 
 class ConsoleWidget extends StatefulWidget {
+  final Map map;
+  ConsoleWidget(this.map);
   @override
   _ConsoleWidgetState createState() => _ConsoleWidgetState();
 }
 
 class _ConsoleWidgetState extends State<ConsoleWidget> {
-  int numShifts = 4;
-
+  List<ConsoleShiftModel> shiftList = [];
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -27,7 +31,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 400,
+                      height: size.height / 2,
                       margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
                       padding: new EdgeInsets.fromLTRB(5, 20, 5, 20),
                       decoration: BoxDecoration(
@@ -50,10 +54,26 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                     SheepLog(),
                     BottomNavBar(
                       confirmButton: () {
+                        InputData(
+                          widget.map['isMorningPerson'],
+                          widget.map['likeMelatonin'],
+                          widget.map['medicine'],
+                          widget.map['preferences'],
+                          widget.map['departureDate'],
+                          widget.map['dockDate'],
+                          widget.map['undockDate'],
+                          widget.map['departureDeparture'],
+                          widget.map['dockingArrival'],
+                          widget.map['undockArrival'],
+                          widget.map['undockDeparture'],
+                          widget.map['location'],
+                          shiftList,
+                        );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoadingPage()),
+                            builder: (context) => LoadingPage(),
+                          ),
                         );
                       },
                     )
@@ -81,9 +101,9 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: numShifts,
+            itemCount: shiftList.length,
             itemBuilder: (BuildContext context, int index) {
-              return buildDateTimeInput();
+              return buildDateTimeInput(index);
             },
           ),
         ),
@@ -108,22 +128,32 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
             width: 1,
           ),
           onPressed: () {
-            setState(() {
-              numShifts += 1;
-            });
+            setState(() => shiftList.add(ConsoleShiftModel()));
           },
         )
       ],
     );
   }
 
-  Widget buildDateTimeInput() {
+  Widget buildDateTimeInput(int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        new PickDateWidget(dateType: 'Date'),
-        new PickTimeWidget(timeType: 'Time'),
-        new PickTimeWidget(timeType: 'Time')
+        new PickDateWidget(
+          dateType: 'Date',
+          pickDate: (pickedDate) =>
+              setState(() => shiftList[index].date = pickedDate),
+        ),
+        new PickTimeWidget(
+          timeType: 'Time',
+          pickTime: (pickedTime) =>
+              setState(() => shiftList[index].start = pickedTime),
+        ),
+        new PickTimeWidget(
+          timeType: 'Time',
+          pickTime: (pickedTime) =>
+              setState(() => shiftList[index].end = pickedTime),
+        )
       ],
     );
   }

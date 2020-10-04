@@ -7,30 +7,19 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPage extends State<LoadingPage> {
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    // change delayed until calculation is complete
-    Future.delayed(Duration(seconds: 3), () {
-      setState(() {
-        _loading = false;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _loading
-            ? CircularProgressIndicator()
-            : Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CalenderWidget()),
-              ),
-      ),
+    return FutureBuilder(
+      future: Future.delayed(Duration(seconds: 3), () => true),
+      builder: (context, AsyncSnapshot<bool> snapshot) {
+        return Scaffold(
+          body: Center(
+            child: !snapshot.hasData
+                ? CircularProgressIndicator()
+                : CalenderWidget(),
+          ),
+        );
+      },
     );
   }
 }
