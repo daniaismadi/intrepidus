@@ -3,6 +3,7 @@ import 'package:sleep_shifting_scheduler/api/EventModel.dart';
 import 'package:sleep_shifting_scheduler/api/UserModel.dart';
 import 'package:sleep_shifting_scheduler/database/databaseFunctions.dart';
 import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
+import 'package:sleep_shifting_scheduler/widgets/intrepidus.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CalenderWidget(),
+      home: Testing(),
     );
   }
 }
