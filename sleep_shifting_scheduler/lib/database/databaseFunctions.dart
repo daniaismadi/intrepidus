@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
 import 'package:sleep_shifting_scheduler/api/ExerciseModel.dart';
+import 'package:sleep_shifting_scheduler/api/MealModel.dart';
 
 class DatabaseFunctions {
   static const String ADD_NEW_USER_PATH = '/users';
@@ -62,5 +63,17 @@ class DatabaseFunctions {
     return EventListModel(
       thisEventsModelMap: Map<DateTime, List<EventModel>>.from(myMap),
     );
+  }
+
+  Future<MealModel> readUserMeal(String key) async {
+    Map userMeal;
+    await db
+        .child(DatabaseFunctions.ADD_NEW_USER_PATH + '/' + key)
+        .once()
+        .then((value) => userMeal = value.value['meal']);
+    List<String> listOfKeys =
+        userMeal.entries.map((e) => e.key.toString()).toList();
+    List<List> listOfEvents =
+        userEvent.entries.map((e) => e.value as List).toList();
   }
 }
