@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
+import 'package:sleep_shifting_scheduler/api/MealModel.dart';
 import 'package:sleep_shifting_scheduler/api/UserModel.dart';
 import 'package:sleep_shifting_scheduler/database/databaseFunctions.dart';
 import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
@@ -11,7 +12,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,8 +20,23 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Testing(),
+      home: Test1(),
     );
+  }
+}
+
+class Test1 extends StatelessWidget {
+  final DatabaseFunctions db = DatabaseFunctions();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Text(db
+          .getAllMeals('1601752362217')
+          .then((value) => MealModel(fromMap: Map.from(value)))
+          .toString()),
+    ));
   }
 }
 
