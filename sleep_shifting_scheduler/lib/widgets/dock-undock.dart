@@ -13,68 +13,46 @@ class DockingWidget extends StatefulWidget {
 class _DockingWidgetState extends State<DockingWidget> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        margin: new EdgeInsets.fromLTRB(0, 0, 0, 30),
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // shrinkWrap: true,
-          // padding: const EdgeInsets.only(top: 130),
-          children: [
-            Center(
-                child: Container(
-                    margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
-                    padding: new EdgeInsets.fromLTRB(5, 20, 5, 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Color.fromRGBO(7, 78, 232, 1.0), width: 2),
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    alignment: Alignment(0, 0),
-                    height: 360,
-                    width: 300,
-                    child: buildFields())),
-            // Bottom widgets.
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SvgPicture.asset('lib/images/intrepiduslogo180px.svg',
-                            width: 90, height: 90)
-                      ]),
+      body: SingleChildScrollView(
+        child: Container(
+          height: size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 400,
+                      margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
+                      padding: new EdgeInsets.fromLTRB(5, 10, 5, 20),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent, width: 2),
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
+                      child: buildFields(),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          icon: new Icon(CupertinoIcons.arrow_left,
-                              color: Color.fromRGBO(7, 78, 232, 1.0)),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                      RaisedButton(
-                          onPressed: () {},
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          textColor: Colors.white,
-                          padding: const EdgeInsets.all(0.0),
-                          color: Color.fromRGBO(7, 78, 232, 1.0),
-                          child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: const Text('Confirm',
-                                  style: TextStyle(
-                                      fontFamily: 'Segoe-UI', fontSize: 15))))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
+              ),
+              // Bottom widgets.
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    SheepLog(),
+                    BottomNavBar(
+                      confirmButton: () => {},
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -83,7 +61,7 @@ class _DockingWidgetState extends State<DockingWidget> {
   Widget buildFields() {
     return ListView(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.all(10),
         child: Text(
           'When are you docking and undocking?',
           style: TextStyle(fontSize: 20, fontFamily: 'Segoe-UI'),
@@ -106,5 +84,63 @@ class _DockingWidgetState extends State<DockingWidget> {
       ]),
       new PickLocation()
     ]);
+  }
+}
+
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({
+    this.confirmButton,
+    Key key,
+  }) : super(key: key);
+
+  final Function confirmButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: new Icon(CupertinoIcons.arrow_left,
+                color: Color.fromRGBO(7, 78, 232, 1.0)),
+            onPressed: () => Navigator.pop(context),
+          ),
+          RaisedButton(
+            onPressed: confirmButton,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+            textColor: Colors.white,
+            padding: const EdgeInsets.all(0.0),
+            color: Color.fromRGBO(7, 78, 232, 1.0),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: const Text(
+                'Confirm',
+                style: TextStyle(fontFamily: 'Segoe-UI', fontSize: 15),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SheepLog extends StatelessWidget {
+  const SheepLog({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        SvgPicture.asset('lib/images/intrepiduslogo180px.svg',
+            width: 90, height: 90)
+      ]),
+    );
   }
 }
