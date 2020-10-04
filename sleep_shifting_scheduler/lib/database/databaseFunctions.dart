@@ -1,4 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:sleep_shifting_scheduler/api/EventModel.dart';
+import 'package:sleep_shifting_scheduler/api/ExerciseModel.dart';
 
 class DatabaseFunctions {
   static const String ADD_NEW_USER_PATH = '/users';
@@ -21,17 +23,68 @@ class DatabaseFunctions {
     return returnValue;
   }
 
-  Future<Map> readUser(String path, String key) async {
-    DatabaseReference user = db.child(path + '/' + key);
-    String userId;
-    String name;
-    user.once().then((snapshot) {
-      userId = snapshot.value['id'];
-      name = snapshot.value['name'];
-    });
+  Future<EventListModel> readUserEvents(String key) async {
+    Map userEvent;
+    await db
+        .child(DatabaseFunctions.ADD_NEW_USER_PATH + '/' + key)
+        .once()
+        .then((DataSnapshot value) => userEvent = value.value['event']);
+    List<String> listOfKeys =
+        userEvent.entries.map((e) => e.key.toString()).toList();
+    List<List> listOfEvents =
+        userEvent.entries.map((e) => e.value as List).toList();
+    List<List<EventModel>> listOfEventModel = listOfEvents
+        .map(
+          (e) => e
+              .map(
+                (e) => EventModel(
+                  color: e['color'],
+                  description: e['description'],
+                  eventTitle: e['eventTitle'],
+                  until: DateTime.parse(e['until']),
+                  dateTime: DateTime.parse(e['dateTime']),
+                  eventId: e['eventId'],
+                ),
+              )
+              .toList(),
+        )
+        .toList();
+    Map<DateTime, List<dynamic>> myMap = {};
+    for (int i = 0; i < listOfKeys.length; i++) {
+      myMap.addEntries(
+          [MapEntry(DateTime.parse(listOfKeys[i]), listOfEventModel[i])]);
+    }
 
-    Map<String, dynamic> userMap = {};
+    return EventListModel(
+      thisEventsModelMap: Map<DateTime, List<EventModel>>.from(myMap),
+    );
+  }
 
-    print(userMap.runtimeType);
+  Future<ExcerciseModel> readUserExercise(String key) async {
+    Map userExercise;
+    await db
+        .child(DatabaseFunctions.ADD_NEW_USER_PATH + '/' + key)
+        .once()
+        .then((value) => userExercise = value.value['exercise']);
+    List<String> listOfKeys =
+        userExercise.entries.map((e) => e.key.toString()).toList();
+    List<List> listOfExercise =
+        userExercise.entries.map((e) => e.value as List).toList();
+    List<List<Map<String, int>>> listOfListOfMaps = listOfExercise
+        .map(
+          (e) => e
+              .map((e) => {e.keys.first as String: e.values.first as int})
+              .toList(),
+        )
+        .toList();
+    Map<DateTime, List<Map<String, int>>> myMap = {};
+    for (int i = 0; i < listOfKeys.length; i++) {
+      myMap.addEntries(
+        [
+          MapEntry(DateTime.parse(listOfKeys[i]), listOfListOfMaps[i]),
+        ],
+      );
+    }
+    return ExcerciseModel(exerciseMap: myMap);
   }
 }

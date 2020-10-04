@@ -8,6 +8,7 @@ import 'package:sleep_shifting_scheduler/api/MealModel.dart';
 import 'package:sleep_shifting_scheduler/constants.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
+import 'package:sleep_shifting_scheduler/database/databaseFunctions.dart';
 
 class CalenderWidget extends StatefulWidget {
   CalenderWidget({Key key}) : super(key: key);
@@ -33,72 +34,7 @@ class _CalenderWidgetState extends State<CalenderWidget>
   void initState() {
     tabController = TabController(length: 3, vsync: this);
 
-    _markedDate = EventListModel(fromMap: {
-      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
-        {
-          'eventId': '1',
-          'description': 'Some Description',
-          'eventTitle': 'Open your eyes',
-          'color': '219653',
-          'dateTime': DateTime.now().toIso8601String(),
-          'until': DateTime.now().add(Duration(minutes: 20)).toIso8601String()
-        },
-        {
-          'eventId': '2',
-          'description': 'Some Description',
-          'eventTitle': 'Eat',
-          'color': 'F2C94C',
-          'dateTime': DateTime.now().add(Duration(hours: 1)).toIso8601String(),
-          'until': DateTime.now()
-              .add(Duration(hours: 1, minutes: 20))
-              .toIso8601String(),
-        },
-        {
-          'eventId': '3',
-          'description': 'Some Description',
-          'eventTitle': 'Sleep',
-          'color': '074EE8',
-          'dateTime': DateTime.now().add(Duration(hours: 2)).toIso8601String(),
-          'until': DateTime.now()
-              .add(Duration(hours: 2, minutes: 20))
-              .toIso8601String(),
-        }
-      ],
-      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
-        {
-          'eventId': '1',
-          'description': 'Some Description',
-          'eventTitle': 'Open your eyes',
-          'color': '219653',
-          'dateTime': DateTime.now().add(Duration(hours: 1)).toIso8601String(),
-          'until': DateTime.now()
-              .add(Duration(hours: 1, minutes: 20))
-              .toIso8601String(),
-        },
-        {
-          'eventId': '2',
-          'description': 'Some Description',
-          'eventTitle': 'sleep',
-          'color': 'F2C94C',
-          'dateTime': DateTime.now().add(Duration(hours: 2)).toIso8601String(),
-          'until': DateTime.now()
-              .add(Duration(hours: 2, minutes: 20))
-              .toIso8601String(),
-        },
-      ],
-    });
-    _exerciseModel = ExcerciseModel(fromMap: {
-      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
-        {'ThreadMill': 40},
-        {'Cycle': 40},
-        {'Streaching': 40},
-      ],
-      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
-        {'ThreadMill': 40},
-        {'Cycle': 40},
-        {'Streaching': 40},
-      ],
-    });
+    callEvents();
     _mealModel = MealModel(fromMap: {
       DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
         {
@@ -124,10 +60,15 @@ class _CalenderWidgetState extends State<CalenderWidget>
       ]
     });
 
-    eventLists = _markedDate.getEventModelList(_currentDate);
-    exerciseList = _exerciseModel.getTodayExercise(_currentDate);
     mealLists = _mealModel.getTodayMeals(_currentDate);
     super.initState();
+  }
+
+  callEvents() async {
+    _markedDate = await DatabaseFunctions().readUserEvents('1601752362217');
+    _exerciseModel =
+        await DatabaseFunctions().readUserExercise('1601752362217');
+    return _markedDate;
   }
 
   @override
@@ -140,67 +81,79 @@ class _CalenderWidgetState extends State<CalenderWidget>
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CalendarHeader(size: size, months: cMonths, scrollMonth: scrollMonth),
-          Container(
-            color: Color(0XFFE0EAFF),
-            child: CalendarCarousel<Event>(
-              showHeaderButton: false,
-              headerMargin: EdgeInsets.all(35),
-              childAspectRatio: 1.0,
-              showHeader: false,
-              showWeekDays: false,
-              weekFormat: false,
-              daysHaveCircularBorder: null,
-              height: size.height * 2 / 5,
-              todayButtonColor: Colors.transparent,
-              nextMonthDayBorderColor: Colors.black,
-              markedDatesMap: _markedDate.eventList,
-              weekendTextStyle: TextStyle(color: Colors.black),
-              daysTextStyle: TextStyle(color: Colors.black),
-              weekDayFormat: WeekdayFormat.standaloneShort,
-              weekdayTextStyle: TextStyle(color: Colors.black),
-              selectedDayButtonColor: Colors.grey.withOpacity(0.3),
-              selectedDateTime: _currentDate,
-              headerTextStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+        body: FutureBuilder(
+      future: callEvents(),
+      builder: (context, AsyncSnapshot<void> _) {
+        if (_.hasData) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CalendarHeader(
+                  size: size, months: cMonths, scrollMonth: scrollMonth),
+              Container(
+                color: Color(0XFFE0EAFF),
+                child: CalendarCarousel<Event>(
+                  showHeaderButton: false,
+                  headerMargin: EdgeInsets.all(35),
+                  childAspectRatio: 1.0,
+                  showHeader: false,
+                  showWeekDays: false,
+                  weekFormat: false,
+                  daysHaveCircularBorder: null,
+                  height: size.height * 2 / 5,
+                  todayButtonColor: Colors.transparent,
+                  nextMonthDayBorderColor: Colors.black,
+                  markedDatesMap: _markedDate.eventList,
+                  weekendTextStyle: TextStyle(color: Colors.black),
+                  daysTextStyle: TextStyle(color: Colors.black),
+                  weekDayFormat: WeekdayFormat.standaloneShort,
+                  weekdayTextStyle: TextStyle(color: Colors.black),
+                  selectedDayButtonColor: Colors.grey.withOpacity(0.3),
+                  selectedDateTime: _currentDate,
+                  headerTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onCalendarChanged: (DateTime a) =>
+                      setState(() => scrollMonth = a.month),
+                  selectedDayTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black),
+                  todayTextStyle: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                  onDayPressed: (DateTime date, List<Event> events) {
+                    setState(() {
+                      _currentDate = date;
+                      eventLists = _markedDate.getEventModelList(_currentDate);
+                      exerciseList =
+                          _exerciseModel.getTodayExercise(_currentDate);
+                      mealLists = _mealModel.getTodayMeals(_currentDate);
+                    });
+                  },
+                ),
               ),
-              onCalendarChanged: (DateTime a) =>
-                  setState(() => scrollMonth = a.month),
-              selectedDayTextStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black),
-              todayTextStyle: TextStyle(
-                  color: Colors.red, fontWeight: FontWeight.bold, fontSize: 18),
-              onDayPressed: (DateTime date, List<Event> events) {
-                setState(() {
-                  _currentDate = date;
-                  eventLists = _markedDate.getEventModelList(_currentDate);
-                  exerciseList = _exerciseModel.getTodayExercise(_currentDate);
-                  mealLists = _mealModel.getTodayMeals(_currentDate);
-                });
-              },
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: [
-                ScheduleView(eventLists: eventLists),
-                MealView(mealLists: mealLists),
-                ExerciseView(exerciseList: exerciseList),
-              ],
-            ),
-          ),
-          BottomTabs(tabController: tabController)
-        ],
-      ),
-    );
+              Expanded(
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    ScheduleView(eventLists: eventLists),
+                    MealView(mealLists: mealLists),
+                    ExerciseView(exerciseList: exerciseList),
+                  ],
+                ),
+              ),
+              BottomTabs(tabController: tabController)
+            ],
+          );
+        } else {
+          return Container();
+        }
+      },
+    ));
   }
 }
 
@@ -345,7 +298,9 @@ class ScheduleView extends StatelessWidget {
           : ListView(
               padding: EdgeInsets.all(0),
               children: eventLists
-                  .map((EventModel e) => EventsListTiles(e: e))
+                  .map(
+                    (EventModel e) => EventsListTiles(e: e),
+                  )
                   .toList(),
             ),
     );
