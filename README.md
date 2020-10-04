@@ -7,7 +7,7 @@ Intrepidus is the optimal companion for an astronaut in space. Simply enter deta
 Flutter SDK and a mobile application simulator of your choice is needed to run the application. Once this is done, clone this repository, navigate to the sleep_shifting_scheduler folder and type "flutter run" in your terminal and the application should start running. We use Firebase as back-end to store data from the application.
 
 ## Simple Algorithm for Sleep Shift Schedule
-1. A morning person's optimal sleep schedule is from 22:00 - 5:00, while an evening person's optimal sleep schedule is 2:00 - 9:00.
+1. A morning person's optimal sleep schedule is from 22:00 - 5:00, while an evening person's optimal sleep schedule is 02:00 - 09:00.
 2. The International Space Station follows GMT+0 for the timezone.
 3. The initial sleep schedule is set to the start of the optimal sleep schedule time + the offset time difference from GMT+0. For example, if the the astronaut takes off at a location with GMT+6 and this person is a morning person, this means that the initial sleep schedule for this person will be set from 04:00 - 11:00.
 4. If docking occurs before the start of the initial sleep schedule, the initial sleep schedule will start on the same day. If after, the initial sleep schedule starts the next day.
