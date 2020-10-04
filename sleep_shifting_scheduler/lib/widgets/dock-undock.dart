@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sleep_shifting_scheduler/widgets/console-shifts.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickLocation.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
@@ -31,7 +32,8 @@ class _DockingWidgetState extends State<DockingWidget> {
                       margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
                       padding: new EdgeInsets.fromLTRB(5, 10, 5, 20),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blueAccent, width: 2),
+                        border: Border.all(
+                            color: Color.fromRGBO(7, 78, 232, 1.0), width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                       ),
                       child: buildFields(),
@@ -46,7 +48,14 @@ class _DockingWidgetState extends State<DockingWidget> {
                   children: [
                     SheepLog(),
                     BottomNavBar(
-                      confirmButton: () => {},
+                      confirmButton: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConsoleWidget(),
+                          ),
+                        )
+                      },
                     )
                   ],
                 ),

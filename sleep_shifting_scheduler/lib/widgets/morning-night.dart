@@ -18,7 +18,8 @@ class MornNight extends StatelessWidget {
                   margin: new EdgeInsets.fromLTRB(20, 120, 20, 40),
                   padding: new EdgeInsets.fromLTRB(5, 20, 5, 20),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent, width: 2),
+                      border: Border.all(
+                          color: Color.fromRGBO(7, 78, 232, 1.0), width: 2),
                       borderRadius: BorderRadius.all(Radius.circular(50))),
                   alignment: Alignment(0, 0),
                   height: 400,
