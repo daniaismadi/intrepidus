@@ -1,9 +1,7 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:sleep_shifting_scheduler/api/EventModel.dart';
 import 'package:sleep_shifting_scheduler/api/UserModel.dart';
 import 'package:sleep_shifting_scheduler/database/databaseFunctions.dart';
-import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -146,7 +144,7 @@ class Testing extends StatelessWidget {
                 color: Colors.blue,
                 child: Icon(Icons.wallet_giftcard),
                 onPressed: () async {
-                  var q = thisUser.toMap() as Map;
+                  var q = thisUser.toMap();
                   print(q.runtimeType is Map);
                 }),
             RaisedButton(
@@ -171,6 +169,8 @@ class Testing extends StatelessWidget {
                     event: a['event'],
                     exercise: a['exercise'],
                   );
+                  Map<String, List<Map<String, int>>> exerciseMap = {};
+                  print(retrieved.exercise.map().toList());
                   print(retrieved.toMap());
                 }),
           ],
