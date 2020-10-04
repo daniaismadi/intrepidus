@@ -40,13 +40,15 @@ class _DockingWidgetState extends State<DockingWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 400,
+                      height: size.height / 2,
                       margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
                       padding: new EdgeInsets.fromLTRB(5, 10, 5, 20),
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: Color.fromRGBO(7, 78, 232, 1.0), width: 2),
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50),
+                        ),
                       ),
                       child: buildFields(),
                     ),

@@ -20,7 +20,9 @@ class _MyHomePageState extends State<MyHomePage> {
             TripButton(onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MornNight()),
+                MaterialPageRoute(
+                  builder: (context) => MornNight(),
+                ),
               );
             })
           ],

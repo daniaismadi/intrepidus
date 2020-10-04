@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sleep_shifting_scheduler/api/InputData.dart';
 import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
@@ -14,9 +15,9 @@ class ConsoleWidget extends StatefulWidget {
 
 class _ConsoleWidgetState extends State<ConsoleWidget> {
   List<ConsoleShiftModel> shiftList = [];
-
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -29,7 +30,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 400,
+                      height: size.height / 2,
                       margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
                       padding: new EdgeInsets.fromLTRB(5, 20, 5, 20),
                       decoration: BoxDecoration(
@@ -155,45 +156,4 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
       ],
     );
   }
-}
-
-class ConsoleShiftModel {
-  DateTime date;
-  TimeOfDay start;
-  TimeOfDay end;
-  ConsoleShiftModel({this.date, this.start, this.end}) {
-    date = DateTime.now();
-    start = TimeOfDay.now();
-    end = TimeOfDay.now();
-  }
-}
-
-class InputData {
-  final bool isMorningPerson;
-  final bool likeMelatonin;
-  final bool medicine;
-  final String preferences;
-  final DateTime departureDate;
-  final DateTime dockDate;
-  final DateTime undockDate;
-  final TimeOfDay departureDeparture;
-  final TimeOfDay dockingArrival;
-  final TimeOfDay undockArrival;
-  final TimeOfDay undockDeparture;
-  final int location;
-  final List<ConsoleShiftModel> shifts;
-  InputData(
-      this.isMorningPerson,
-      this.likeMelatonin,
-      this.medicine,
-      this.preferences,
-      this.departureDate,
-      this.dockDate,
-      this.undockDate,
-      this.departureDeparture,
-      this.dockingArrival,
-      this.undockArrival,
-      this.undockDeparture,
-      this.location,
-      this.shifts);
 }

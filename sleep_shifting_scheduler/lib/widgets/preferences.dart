@@ -33,7 +33,7 @@ class _PreferenceState extends State<Preference> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 400,
+                      height: size.height / 2,
                       margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
                       padding: new EdgeInsets.fromLTRB(5, 20, 5, 20),
                       decoration: BoxDecoration(

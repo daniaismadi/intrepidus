@@ -7,6 +7,7 @@ import 'preferences.dart';
 class MornNight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
         children: [
@@ -22,7 +23,7 @@ class MornNight extends StatelessWidget {
                           color: Color.fromRGBO(7, 78, 232, 1.0), width: 2),
                       borderRadius: BorderRadius.all(Radius.circular(50))),
                   alignment: Alignment(0, 0),
-                  height: 400,
+                  height: size.height / 2,
                   child: ListView(
                     padding: EdgeInsets.all(15),
                     children: <Widget>[
