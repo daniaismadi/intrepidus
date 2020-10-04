@@ -30,67 +30,37 @@ class DatabaseFunctions {
     return returnValue;
   }
 
-  Future<MealModel> readUserMeals(String userId) async {
-    Map<String, dynamic> rawData;
-    Map<String, List<Map<String, List<String>>>> userMeals = {};
-    await db
-        .child('users/' + userId + '/meal/')
-        .once()
-        .then((snapshot) => rawData = Map<String, List>.from(snapshot.value));
+  Future getAllMeals(String userId) async {
+    DataSnapshot dataSnapshot =
+        await db.child('users/' + userId + "/meal/").once();
 
-    rawData.forEach((key, value) {
-      List<Map> mealList = List<Map>.from(value);
+    if (dataSnapshot.value != null) {
+      Map<String, List<Map<String, List<String>>>> trial = {};
 
-      List<Map<String, List<String>>> finalMealList = [];
+      Map<String, dynamic> example = Map<String, List>.from(dataSnapshot.value);
 
-      Map<String, List<String>> meal = {};
+      example.forEach((key, value) {
+        List<Map> mealList = List<Map>.from(value);
 
-      mealList.forEach((element) {
-        Map<String, List<dynamic>> tempMeal =
-            Map<String, List<dynamic>>.from(element);
-        tempMeal.forEach((mealTitle, foodList) {
-          meal[mealTitle] = List<String>.from(foodList);
+        List<Map<String, List<String>>> finalMealList = [];
+
+        Map<String, List<String>> meal = {};
+
+        mealList.forEach((element) {
+          Map<String, List<dynamic>> tempMeal =
+              Map<String, List<dynamic>>.from(element);
+          tempMeal.forEach((mealTitle, foodList) {
+            meal[mealTitle] = List<String>.from(foodList);
+          });
+
+          finalMealList.add(meal);
         });
 
-        finalMealList.add(meal);
+        trial[key] = finalMealList;
       });
 
-      userMeals[key] = finalMealList;
-    });
-
-    print(userMeals);
-    return MealModel(fromMap: userMeals);
-
-    // DataSnapshot dataSnapshot =
-    //     await db.child('users/' + userId + "/meal/").once();
-
-    // if (dataSnapshot.value != null) {
-    //   Map<String, List<Map<String, List<String>>>> userMeals = {};
-
-    //   Map<String, dynamic> rawData = Map<String, List>.from(dataSnapshot.value);
-
-    //   rawData.forEach((key, value) {
-    //     List<Map> mealList = List<Map>.from(value);
-
-    //     List<Map<String, List<String>>> finalMealList = [];
-
-    //     Map<String, List<String>> meal = {};
-
-    //     mealList.forEach((element) {
-    //       Map<String, List<dynamic>> tempMeal =
-    //           Map<String, List<dynamic>>.from(element);
-    //       tempMeal.forEach((mealTitle, foodList) {
-    //         meal[mealTitle] = List<String>.from(foodList);
-    //       });
-
-    //       finalMealList.add(meal);
-    //     });
-
-    //     userMeals[key] = finalMealList;
-    //   });
-
-    //   return MealModel(fromMap: userMeals);
-    // }
+      return trial;
+    }
   }
 
   Future<EventListModel> readUserEvents(String key) async {
@@ -141,6 +111,16 @@ class DatabaseFunctions {
   //   List<List> listOfEvents =
   //       userEvent.entries.map((e) => e.value as List).toList();
   // }
+
+  MealModel getMeals(String id) {
+    MealModel trial;
+
+    getAllMeals(id).then((value) {
+      trial = MealModel(fromMap: Map.from(value));
+    });
+
+    return trial;
+  }
 
   // Future<Map> readUser(String path, String key) async {
   //   DatabaseReference user = db.child(path + '/' + key);
