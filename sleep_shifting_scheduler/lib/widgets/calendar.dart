@@ -217,12 +217,24 @@ class MealView extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Text(
-              'Meals',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.emoji_food_beverage,
+                color: Color(0XFF074EE8),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Text(
+                  'Meals',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0XFF074EE8)),
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: mealLists == null
@@ -271,15 +283,25 @@ class ExerciseView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Text(
-            'Workout Routine',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.sports,
+              size: 30,
+              color: Color(0XFF074EE8),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Text(
+                'Workout Routine',
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0XFF074EE8)),
+              ),
+            ),
+          ],
         ),
         Expanded(
           child: exerciseList == null

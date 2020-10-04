@@ -2,9 +2,9 @@ class UserModel {
   // Variables are public
   String id;
   String name;
-  Map<String, List<Map<String, dynamic>>> event;
-  Map<String, List<Map<String, int>>> exercise;
-  Map<String, Map<String, List<String>>> meal;
+  dynamic event;
+  dynamic exercise;
+  dynamic meal;
   Map<String, dynamic> fromMap;
   UserModel(
       {this.id,

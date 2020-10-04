@@ -1,3 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 
-final databaseReference = FirebaseDatabase.instance.reference();
+class DatabaseServices {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  String hey;
+  DatabaseServices();
+}
