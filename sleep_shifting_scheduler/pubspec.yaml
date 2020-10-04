@@ -60,10 +60,7 @@ flutter:
         - asset: lib/fonts/Segoe-UI.ttf
   
   assets:
-    - lib/images/intrepiduslogorescale.svg
-    - lib/images/intrepiduslogo180px.svg
-    - lib/images/logowords.svg
-    - lib/images/logo.svg
+    - lib/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
