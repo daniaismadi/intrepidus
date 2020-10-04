@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sleep_shifting_scheduler/widgets/console-shifts.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickLocation.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
@@ -58,7 +59,13 @@ class _DockingWidgetState extends State<DockingWidget> {
                             Navigator.pop(context);
                           }),
                       RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ConsoleWidget()),
+                            );
+                          },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                           textColor: Colors.white,
