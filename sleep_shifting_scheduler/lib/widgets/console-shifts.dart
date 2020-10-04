@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
 import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
