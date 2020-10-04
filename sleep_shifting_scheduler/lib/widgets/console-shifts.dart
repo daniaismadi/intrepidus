@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
 import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
+import 'loading.dart';
 
 class ConsoleWidget extends StatefulWidget {
   @override
@@ -49,7 +50,14 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                   children: [
                     SheepLog(),
                     BottomNavBar(
-                      confirmButton: () {},
+                      confirmButton: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoadingPage(),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),

@@ -112,6 +112,7 @@ class BottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
+            // icon: new Icon(Icons.arrow_back,
             icon: new Icon(CupertinoIcons.arrow_left,
                 color: Color.fromRGBO(7, 78, 232, 1.0)),
             onPressed: () => Navigator.pop(context),
