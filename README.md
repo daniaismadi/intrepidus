@@ -11,10 +11,11 @@ Flutter SDK and a mobile application simulator of your choice is needed to run t
 2. The International Space Station follows GMT+0 for the timezone.
 3. The initial sleep schedule is set to the start of the optimal sleep schedule time + the offset time difference from GMT+0. For example, if the the astronaut takes off at a location with GMT+6 and this person is a morning person, this means that the initial sleep schedule for this person will be set from 04:00 - 11:00.
 4. If docking occurs before the start of the initial sleep schedule, the initial sleep schedule will start on the same day. If after, the initial sleep schedule starts the next day.
-5. If a collision occurs, i.e., the astronaut docks whilst they are supposed to be sleeping, we check the offset...
+5. If a collision occurs with the docking time and intended initial sleeping schedule, i.e. the astronaut docks whilst they are supposed to be sleeping, we will 
+change the initial sleeping schedule by either shifting the start or final (wake up time) of the initial sleep schedule, based on the comparison of the docking time with the initial start and final sleep schedule.
 6. The sleep schedule will be shifted by 1 hour each day until the optimal sleep schedule is achieved.
-7. If a collision occurs with the console shift schedule, then...
+7. If a collision occurs with the console shift schedule, then we will shift the sleep schedule by either bringing it forward or backwards by 2 hours (consider: consumption of melatonin and breakfast), depending on the offset of shift schedule and initial sleep schedule. If the offset of shift schedule and start of initial sleep schedule is smaller, then we move forward the initial sleep schedule by 2 hours  and we update the final initial sleep schedule by adding 7 hours, else we move the initial sleep schedule backwards by 2 hours.
 8. If an astronaut chooses to take melatonin, then the optimal time to take is is 2 hours before they sleep.
 9. For meal times, breakfast is set to 1 hour after an astronaut wakes up, dinner is set to 3 hours before a person is supposed to sleep and lunch is set to 6 hours before dinner.
-10. If meal times collide with console shift schedules, then we will move the meal time to before or after the shift schedule...
+10. If meal times collide with console shift schedules, then we will move the meal time to before or after the shift schedule based on the type of meal. If breakfast, we know that it must be consumed within the first 2 hours after the astronaut wakes up, so the meal time can only be moved before the intended 2 hours. If lunch, meal time can be shifted to either before or after the shift (lunch is flexible). If dinner, meal time must be at least 3 hours before start of initial sleep schedule.
 11. Exercise will be conducted twice a day for 30 minutes each day and usually 1 to 2 hours after breakfast and lunch.
