@@ -7,11 +7,23 @@ import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickLocation.dart
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
 
 class DockingWidget extends StatefulWidget {
+  final Map<String, dynamic> dataMap;
+  DockingWidget(this.dataMap);
   @override
   _DockingWidgetState createState() => _DockingWidgetState();
 }
 
 class _DockingWidgetState extends State<DockingWidget> {
+  DateTime departureDate = DateTime.now();
+  DateTime dockDate = DateTime.now();
+  DateTime undockDate = DateTime.now();
+
+  TimeOfDay departureDeparture = TimeOfDay.now();
+  TimeOfDay dockingArrival = TimeOfDay.now();
+  TimeOfDay undockDeparture = TimeOfDay.now();
+  TimeOfDay undockArrival = TimeOfDay.now();
+  int location;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -52,7 +64,21 @@ class _DockingWidgetState extends State<DockingWidget> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ConsoleWidget(),
+                            builder: (context) => ConsoleWidget({
+                              'isMorningPerson':
+                                  widget.dataMap['isMorningPerson'],
+                              'likeMelatonin': widget.dataMap['likeMelatonin'],
+                              'medicine': widget.dataMap['medicine'],
+                              'preferences': widget.dataMap['preferences'],
+                              'departureDate': departureDate,
+                              'dockDate': dockDate,
+                              'undockDate': undockDate,
+                              'departureDeparture': departureDeparture,
+                              'dockingArrival': dockingArrival,
+                              'undockDeparture': undockDeparture,
+                              'undockArrival': undockArrival,
+                              'location': location,
+                            }),
                           ),
                         )
                       },
@@ -79,19 +105,40 @@ class _DockingWidgetState extends State<DockingWidget> {
       ),
       SizedBox(height: 7),
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        new PickDateWidget(dateType: 'Departure Date'),
-        new PickTimeWidget(timeType: 'Departure')
+        new PickDateWidget(
+          dateType: 'Departure Date',
+          pickDate: (newDate) => setState(() => departureDate = newDate),
+        ),
+        new PickTimeWidget(
+          timeType: 'Departure',
+          pickTime: (newTime) => setState(() => departureDeparture = newTime),
+        )
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        new PickDateWidget(dateType: 'Docking Date'),
-        new PickTimeWidget(timeType: 'Arrival')
+        new PickDateWidget(
+          dateType: 'Docking Date',
+          pickDate: (newDate) => setState(() => dockDate = newDate),
+        ),
+        new PickTimeWidget(
+          timeType: 'Arrival',
+          pickTime: (newTime) => setState(() => dockingArrival = newTime),
+        )
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        new PickDateWidget(dateType: 'Undocking Date'),
-        new PickTimeWidget(timeType: 'Departure'),
-        new PickTimeWidget(timeType: 'Arrival'),
+        new PickDateWidget(
+          dateType: 'Undocking Date',
+          pickDate: (newDate) => setState(() => undockDate = newDate),
+        ),
+        new PickTimeWidget(
+          timeType: 'Departure',
+          pickTime: (newTime) => setState(() => undockDeparture = newTime),
+        ),
+        new PickTimeWidget(
+          timeType: 'Arrival',
+          pickTime: (newTime) => setState(() => undockArrival = newTime),
+        ),
       ]),
-      new PickLocation()
+      new PickLocation((int timezone) => setState(() => location = timezone))
     ]);
   }
 }
@@ -119,7 +166,8 @@ class BottomNavBar extends StatelessWidget {
           RaisedButton(
             onPressed: confirmButton,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
             textColor: Colors.white,
             padding: const EdgeInsets.all(0.0),
             color: Color.fromRGBO(7, 78, 232, 1.0),

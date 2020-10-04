@@ -39,7 +39,9 @@ class MornNight extends StatelessWidget {
                       MorningButton(onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Preference()),
+                          MaterialPageRoute(
+                            builder: (context) => Preference(true),
+                          ),
                         );
                       }),
                       Padding(
@@ -48,7 +50,9 @@ class MornNight extends StatelessWidget {
                       NightButton(onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Preference()),
+                          MaterialPageRoute(
+                            builder: (context) => Preference(false),
+                          ),
                         );
                       }),
                     ],

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class PickTimeWidget extends StatefulWidget {
   final String timeType;
-
-  PickTimeWidget({Key key, @required this.timeType}) : super(key: key);
+  final Function pickTime;
+  PickTimeWidget({Key key, @required this.timeType, this.pickTime})
+      : super(key: key);
 
   @override
   _PickTimeWidgetState createState() => _PickTimeWidgetState();
@@ -49,9 +50,8 @@ class _PickTimeWidgetState extends State<PickTimeWidget> {
         });
 
     if (timePicked != null) {
-      setState(() {
-        time = timePicked;
-      });
+      setState(() => time = timePicked);
+      widget.pickTime(timePicked);
     }
   }
 }

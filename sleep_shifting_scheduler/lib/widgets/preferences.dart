@@ -6,6 +6,8 @@ import 'custom_widget/confirm.dart';
 import 'custom_widget/switch.dart';
 
 class Preference extends StatefulWidget {
+  final bool isMorningPerson;
+  Preference(this.isMorningPerson);
   @override
   _PreferenceState createState() => _PreferenceState();
 }
@@ -13,6 +15,7 @@ class Preference extends StatefulWidget {
 class _PreferenceState extends State<Preference> {
   bool _switchValue1 = true;
   bool _switchValue2 = false;
+  TextEditingController textController = TextEditingController();
   String str1 = "I'd like to take melatonin";
   String str2 = "I'm using prescription medication";
 
@@ -77,6 +80,7 @@ class _PreferenceState extends State<Preference> {
                             Padding(
                               padding: EdgeInsets.all(20),
                               child: TextField(
+                                controller: textController,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: 'Please specify'),
@@ -98,7 +102,15 @@ class _PreferenceState extends State<Preference> {
                       confirmButton: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DockingWidget()),
+                          builder: (context) => DockingWidget(
+                            {
+                              'isMorningPerson': widget.isMorningPerson,
+                              'likeMelatonin': _switchValue1,
+                              'medicine': _switchValue2,
+                              'preferences': textController.text.toString(),
+                            },
+                          ),
+                        ),
                       ),
                     )
                   ],
@@ -108,32 +120,6 @@ class _PreferenceState extends State<Preference> {
           ),
         ),
       ),
-      // floatingActionButton: Stack(
-      //   children: <Widget>[
-      //     Align(
-      //       alignment: Alignment(-0.8, 1.0),
-      //       child: FloatingActionButton(
-      //         onPressed: () {
-      //           Navigator.pop(context);
-      //         },
-      //         child: Icon(Icons.arrow_back_ios, color: Colors.blue),
-      //         backgroundColor: Colors.white,
-      //         elevation: 10.0,
-      //       ),
-      //     ),
-      //     Align(
-      //       alignment: Alignment.bottomRight,
-      //       child: ConfirmButton(
-      //         onPressed: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => DockingWidget()),
-      //           );
-      //         },
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

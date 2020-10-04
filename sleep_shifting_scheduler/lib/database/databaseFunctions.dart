@@ -1,9 +1,4 @@
-import 'dart:collection';
-import 'dart:math';
-
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:sleep_shifting_scheduler/api/ExerciseModel.dart';
 
 class DatabaseFunctions {
   static const String ADD_NEW_USER_PATH = '/users';

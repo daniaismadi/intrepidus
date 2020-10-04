@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickDate.dart';
 import 'package:sleep_shifting_scheduler/widgets/custom_widget/pickTime.dart';
 import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
 
 class ConsoleWidget extends StatefulWidget {
+  final Map map;
+  ConsoleWidget(this.map);
   @override
   _ConsoleWidgetState createState() => _ConsoleWidgetState();
 }
 
 class _ConsoleWidgetState extends State<ConsoleWidget> {
-  int numShifts = 4;
+  List<ConsoleShiftModel> shiftList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,29 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                   children: [
                     SheepLog(),
                     BottomNavBar(
-                      confirmButton: () {},
+                      confirmButton: () {
+                        InputData(
+                          widget.map['isMorningPerson'],
+                          widget.map['likeMelatonin'],
+                          widget.map['medicine'],
+                          widget.map['preferences'],
+                          widget.map['departureDate'],
+                          widget.map['dockDate'],
+                          widget.map['undockDate'],
+                          widget.map['departureDeparture'],
+                          widget.map['dockingArrival'],
+                          widget.map['undockArrival'],
+                          widget.map['undockDeparture'],
+                          widget.map['location'],
+                          shiftList,
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CalenderWidget(),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),
@@ -74,9 +99,9 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: numShifts,
+            itemCount: shiftList.length,
             itemBuilder: (BuildContext context, int index) {
-              return buildDateTimeInput();
+              return buildDateTimeInput(index);
             },
           ),
         ),
@@ -101,23 +126,74 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
             width: 1,
           ),
           onPressed: () {
-            setState(() {
-              numShifts += 1;
-            });
+            setState(() => shiftList.add(ConsoleShiftModel()));
           },
         )
       ],
     );
   }
 
-  Widget buildDateTimeInput() {
+  Widget buildDateTimeInput(int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        new PickDateWidget(dateType: 'Date'),
-        new PickTimeWidget(timeType: 'Time'),
-        new PickTimeWidget(timeType: 'Time')
+        new PickDateWidget(
+          dateType: 'Date',
+          pickDate: (pickedDate) =>
+              setState(() => shiftList[index].date = pickedDate),
+        ),
+        new PickTimeWidget(
+          timeType: 'Time',
+          pickTime: (pickedTime) =>
+              setState(() => shiftList[index].start = pickedTime),
+        ),
+        new PickTimeWidget(
+          timeType: 'Time',
+          pickTime: (pickedTime) =>
+              setState(() => shiftList[index].end = pickedTime),
+        )
       ],
     );
   }
+}
+
+class ConsoleShiftModel {
+  DateTime date;
+  TimeOfDay start;
+  TimeOfDay end;
+  ConsoleShiftModel({this.date, this.start, this.end}) {
+    date = DateTime.now();
+    start = TimeOfDay.now();
+    end = TimeOfDay.now();
+  }
+}
+
+class InputData {
+  final bool isMorningPerson;
+  final bool likeMelatonin;
+  final bool medicine;
+  final String preferences;
+  final DateTime departureDate;
+  final DateTime dockDate;
+  final DateTime undockDate;
+  final TimeOfDay departureDeparture;
+  final TimeOfDay dockingArrival;
+  final TimeOfDay undockArrival;
+  final TimeOfDay undockDeparture;
+  final int location;
+  final List<ConsoleShiftModel> shifts;
+  InputData(
+      this.isMorningPerson,
+      this.likeMelatonin,
+      this.medicine,
+      this.preferences,
+      this.departureDate,
+      this.dockDate,
+      this.undockDate,
+      this.departureDeparture,
+      this.dockingArrival,
+      this.undockArrival,
+      this.undockDeparture,
+      this.location,
+      this.shifts);
 }
