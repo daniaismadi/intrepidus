@@ -33,34 +33,7 @@ class _CalenderWidgetState extends State<CalenderWidget>
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
-
     callEvents();
-    _mealModel = MealModel(fromMap: {
-      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
-        {
-          'Meal A': ['Food', 'Grain', 'Jelly', 'Something else'],
-        },
-        {
-          'Meal B': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-        {
-          'Meal C': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-      ],
-      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
-        {
-          'Meal A': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-        {
-          'Meal B': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-        {
-          'Meal C': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-      ]
-    });
-
-    mealLists = _mealModel.getTodayMeals(_currentDate);
     super.initState();
   }
 
@@ -68,6 +41,7 @@ class _CalenderWidgetState extends State<CalenderWidget>
     _markedDate = await DatabaseFunctions().readUserEvents('1601752362217');
     _exerciseModel =
         await DatabaseFunctions().readUserExercise('1601752362217');
+    _mealModel = await DatabaseFunctions().readUserMeals('1601752362217');
     return _markedDate;
   }
 

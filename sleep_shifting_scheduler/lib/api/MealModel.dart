@@ -2,6 +2,7 @@ class MealModel {
   // Map of DateTime and ListOfMeals, breakfast lunch and diner
   Map<DateTime, List<Meal>> mealList;
   Map<String, List<Map<String, List<String>>>> fromMap;
+
   MealModel({this.mealList, this.fromMap}) {
     if (fromMap != null) {
       mealList = fromMap.map(
@@ -16,9 +17,15 @@ class MealModel {
       );
     }
   }
+
   // Get today's meals
   List<Meal> getTodayMeals(DateTime day) =>
       mealList[DateTime(day.year, day.month, day.day)];
+
+  @override
+  String toString() {
+    return '${this.mealList}';
+  }
 }
 
 class Meal {

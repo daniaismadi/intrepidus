@@ -96,7 +96,7 @@ class _DockingWidgetState extends State<DockingWidget> {
   }
 
   Widget buildFields() {
-    return ListView(children: <Widget>[
+    return ListView(padding: EdgeInsets.all(0), children: <Widget>[
       Padding(
         padding: const EdgeInsets.all(10),
         child: Text(

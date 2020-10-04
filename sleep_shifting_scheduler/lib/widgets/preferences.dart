@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sleep_shifting_scheduler/widgets/dock-undock.dart';
-import 'custom_widget/confirm.dart';
 import 'custom_widget/switch.dart';
 
 class Preference extends StatefulWidget {
@@ -35,7 +33,7 @@ class _PreferenceState extends State<Preference> {
                     Container(
                       height: size.height / 2,
                       margin: new EdgeInsets.fromLTRB(20, 100, 20, 10),
-                      padding: new EdgeInsets.fromLTRB(5, 20, 5, 20),
+                      padding: new EdgeInsets.fromLTRB(5, 0, 5, 20),
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: Color.fromRGBO(7, 78, 232, 1.0), width: 2),

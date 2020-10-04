@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleep_shifting_scheduler/database/databaseFunctions.dart';
 import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
+import 'package:sleep_shifting_scheduler/widgets/intrepidus.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,7 +9,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CalenderWidget(),
+      home: MyHomePage(),
     );
   }
 }

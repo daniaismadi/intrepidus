@@ -6,6 +6,7 @@ class UserModel {
   dynamic exercise;
   dynamic meal;
   Map<String, dynamic> fromMap;
+
   UserModel(
       {this.id,
       this.name,

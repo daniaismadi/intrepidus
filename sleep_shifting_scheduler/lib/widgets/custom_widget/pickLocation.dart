@@ -58,7 +58,10 @@ class _PickLocationState extends State<PickLocation> {
               items: locations.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: TextStyle(fontSize: 10),
+                  ),
                 );
               }).toList(),
             )),
