@@ -6,7 +6,6 @@ class DatabaseFunctions {
   static const String ADD_NEW_USER_PATH = '/users';
   final db = FirebaseDatabase.instance.reference();
 
-  // Create
   Future<void> addsData<T>(String path, String key, Map value) async =>
       await db.child(path + '/' + key).set(value);
   Future<void> deleteData<T>(String path, String key) async =>
