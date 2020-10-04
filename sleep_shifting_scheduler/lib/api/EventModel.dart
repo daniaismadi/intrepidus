@@ -5,8 +5,8 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 class EventListModel {
   /* A list of events */
   // EventList<Event> is used in calender;
-  EventList<Event> thisEventsList;
-  Map<DateTime, List<EventModel>> thisEventsModelMap;
+  EventList<dynamic> thisEventsList;
+  Map thisEventsModelMap;
   // Generates a map
   Map<String, List<Map<String, dynamic>>> fromMap;
 
@@ -34,20 +34,20 @@ class EventListModel {
       // Generate the EventList from thisEventsModelMap when we dont have Map from Database
       thisEventsList = EventList(
         events: thisEventsModelMap.map(
-          (DateTime key, List<EventModel> value) => MapEntry(
+          (key, value) => MapEntry(
             key,
-            value.map((EventModel e) => e.thisEvent).toList(),
+            value.map((e) => e.thisEvent).toList(),
           ),
         ),
       );
     }
   }
   // Generates the map
-  Map<String, List<Map<String, dynamic>>> toMap() {
+  Map<String, List<dynamic>> toMap() {
     return thisEventsModelMap.map(
-      (DateTime key, List<EventModel> value) => MapEntry(
+      (key, value) => MapEntry(
         key.toIso8601String().substring(0, 19),
-        value.map((EventModel e) => e.getMap()).toList(),
+        value.map((e) => e.getMap()).toList(),
       ),
     );
   }
@@ -55,7 +55,7 @@ class EventListModel {
   List<EventModel> getEventModelList(DateTime day) =>
       thisEventsModelMap[DateTime(day.year, day.month, day.day)];
 
-  EventList<Event> get eventList => thisEventsList;
+  EventList<dynamic> get eventList => thisEventsList;
 }
 
 class EventModel {

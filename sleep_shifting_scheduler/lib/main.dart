@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sleep_shifting_scheduler/api/EventModel.dart';
+import 'package:sleep_shifting_scheduler/api/ExerciseModel.dart';
 import 'package:sleep_shifting_scheduler/api/UserModel.dart';
 import 'package:sleep_shifting_scheduler/database/databaseFunctions.dart';
 import 'package:sleep_shifting_scheduler/widgets/calendar.dart';
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Testing(),
+      home: CalenderWidget(),
     );
   }
 }
@@ -157,24 +160,32 @@ class Testing extends StatelessWidget {
                       .updateData('/', 'hello4', {'hello2': 'yes'});
                 }),
             RaisedButton(
-                color: Colors.blue,
-                child: Icon(Icons.wallet_giftcard),
-                onPressed: () async {
-                  var a = await DatabaseFunctions().readData(
-                    DatabaseFunctions.ADD_NEW_USER_PATH,
-                    '1601752362217',
-                  );
-                  UserModel retrieved = UserModel(
-                    id: a['id'],
-                    name: a['name'],
-                    meal: a['meal'],
-                    event: a['event'],
-                    exercise: a['exercise'],
-                  );
-                  Map<String, List<Map<String, int>>> exerciseMap = {};
-                  print(retrieved.exercise.map().toList());
-                  print(retrieved.toMap());
-                }),
+              color: Colors.blue,
+              child: Icon(Icons.wallet_giftcard),
+              onPressed: () async {
+                Map a = await DatabaseFunctions().readData(
+                    DatabaseFunctions.ADD_NEW_USER_PATH, '1601752362217');
+                Map b = a['event'];
+                Map<DateTime, List<dynamic>> c = b.map(
+                  (key, value) => MapEntry(
+                    DateTime.parse(key),
+                    value
+                        .map(
+                          (values) => EventModel(
+                            eventId: values['eventId'],
+                            eventTitle: values['eventTitle'],
+                            color: values['color'],
+                            description: values['description'],
+                            until: DateTime.parse(values['until']),
+                            dateTime: DateTime.parse(values['dateTime']),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                );
+                print(EventListModel(thisEventsModelMap: c).thisEventsList);
+              },
+            ),
           ],
         ),
       ),
