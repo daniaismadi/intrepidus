@@ -35,48 +35,6 @@ class _CalenderWidgetState extends State<CalenderWidget>
   void initState() {
     tabController = TabController(length: 3, vsync: this);
     callEvents();
-<<<<<<< HEAD
-    _exerciseModel = ExcerciseModel(fromMap: {
-      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
-        {'Treadmill': 40},
-        {'Cycle': 40},
-        {'Stretching': 40},
-      ],
-      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
-        {'Treadmill': 40},
-        {'Cycle': 40},
-        {'Stretching': 40},
-      ],
-    });
-    _mealModel = MealModel(fromMap: {
-      DateTime(2020, 10, 5).toIso8601String().substring(0, 19): [
-        {
-          'Meal A': ['Food', 'Grain', 'Jelly', 'Something else'],
-        },
-        {
-          'Meal B': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-        {
-          'Meal C': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-      ],
-      DateTime(2020, 10, 3).toIso8601String().substring(0, 19): [
-        {
-          'Meal A': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-        {
-          'Meal B': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-        {
-          'Meal C': ['Food', 'Grain', 'Jelly', 'Something else']
-        },
-      ]
-    });
-
-    exerciseList = _exerciseModel.getTodayExercise(_currentDate);
-    mealLists = _mealModel.getTodayMeals(_currentDate);
-=======
->>>>>>> bfee9adfa334e6e51cd2ee42eddcf502f7bb68cd
     super.initState();
   }
 
