@@ -3,6 +3,10 @@
 
 Intrepidus is the optimal companion for an astronaut in space. Simply enter details like whether you are a morning or night person, the times you will dock and undock at the International Space Station, and your console shifts and Intrepidus will generate a personalised sleep schedule, meal plans and daily exercise plans for you in seconds!
 
+## Screenshots from the Application
+![Homepage](https://raw.githubusercontent.com/daniaismadi/intrepidus/main/images/1.png)
+
+
 ## Instructions
 Flutter SDK and a mobile application simulator of your choice is needed to run the application. Once this is done, clone this repository, navigate to the sleep_shifting_scheduler folder and type "flutter run" in your terminal and the application should start running. We use Firebase as back-end to store data from the application.
 
