@@ -6,7 +6,15 @@ Intrepidus is the optimal companion for an astronaut in space. Simply enter deta
 ## Screenshots from the Application
 ![Homepage](https://github.com/daniaismadi/intrepidus/blob/main/images/1.png?raw=true)
 ![First Page](https://github.com/daniaismadi/intrepidus/blob/main/images/2.png?raw=true)
-
+![Second Page](https://github.com/daniaismadi/intrepidus/blob/main/images/3.png?raw=true)
+![Calendar](https://github.com/daniaismadi/intrepidus/blob/main/images/4.png?raw=true)
+![Clock](https://github.com/daniaismadi/intrepidus/blob/main/images/5.png?raw=true)
+![Fifth Page](https://github.com/daniaismadi/intrepidus/blob/main/images/6.png?raw=true)
+![Console Shifts](https://github.com/daniaismadi/intrepidus/blob/main/images/7.png?raw=true)
+![Schedule](https://github.com/daniaismadi/intrepidus/blob/main/images/8.png?raw=true)
+![Meals](https://github.com/daniaismadi/intrepidus/blob/main/images/10.png?raw=true)
+![Workout](https://github.com/daniaismadi/intrepidus/blob/main/images/11.png?raw=true)
+![Settings](https://github.com/daniaismadi/intrepidus/blob/main/images/12.png?raw=true)
 
 ## Instructions
 Flutter SDK and a mobile application simulator of your choice is needed to run the application. Once this is done, clone this repository, navigate to the sleep_shifting_scheduler folder and type "flutter run" in your terminal and the application should start running. We use Firebase as back-end to store data from the application.
