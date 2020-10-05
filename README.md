@@ -4,7 +4,7 @@
 Intrepidus is the optimal companion for an astronaut in space. Simply enter details like whether you are a morning or night person, the times you will dock and undock at the International Space Station, and your console shifts and Intrepidus will generate a personalised sleep schedule, meal plans and daily exercise plans for you in seconds!
 
 ## Screenshots from the Application
-![Homepage](https://raw.githubusercontent.com/daniaismadi/intrepidus/main/images/1.png = 250x)
+![Homepage](https://raw.githubusercontent.com/daniaismadi/intrepidus/main/images/1.png =250x)
 
 
 ## Instructions
